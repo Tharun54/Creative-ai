@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Creative-AI — AI helpers for your business</title>
+<meta name="description" content="Creative-AI builds AI helpers that answer your calls, reply to customers, and finish boring office work — day and night." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Albert+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#F6F8FE;
+  --card:#FFFFFF;
+  --soft:#EEF1FB;
+  --line:#E2E7F5;
+  --ink:#121A38;
+  --muted:#5B6584;
+  --blue:#3056F5;
+  --blue-soft:#E8EDFF;
+  --sun:#FFB02E;
+  --sun-soft:#FFF3DC;
+  --wa:#1FAF54;
+  --wa-soft:#E4F8EC;
+  --radius:18px;
+  --shadow:0 10px 30px rgba(18,26,56,.08);
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Albert Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  display:inline-block;
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--blue);
+  background:var(--blue-soft);padding:6px 14px;border-radius:999px;
+}
+h1,h2,h3{font-family:var(--display);line-height:1.12;font-weight:700}
+h2{font-size:clamp(1.8rem,3.6vw,2.5rem);margin:.9rem 0 1rem;letter-spacing:-.01em}
+.section{padding:96px 0}
+.section-head{max-width:640px;margin-bottom:52px}
+.section-head p{color:var(--muted);font-size:1.05rem}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(246,248,254,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.25rem}
+.logo .spark{
+  width:30px;height:30px;border-radius:10px;
+  background:conic-gradient(from 220deg,var(--sun),#FF7A45,var(--blue),var(--sun));
+}
+.nav-links{display:flex;gap:30px;font-size:.95rem;color:var(--muted);font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-weight:600;font-size:.97rem;
+  padding:13px 24px;border-radius:999px;border:1px solid transparent;
+  cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:var(--card)}
+.btn-blue{background:var(--blue);color:#fff}
+.wa-ic{width:18px;height:18px;fill:currentColor}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 96px;position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(640px 400px at 85% 12%,rgba(48,86,245,.08),transparent 70%),
+    radial-gradient(540px 360px at 5% 90%,rgba(255,176,46,.12),transparent 70%);
+}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;position:relative}
+.hero h1{font-size:clamp(2.2rem,4.8vw,3.4rem);font-weight:800;margin:18px 0 18px;letter-spacing:-.015em}
+.hero h1 .hl{
+  background:linear-gradient(transparent 62%,var(--sun-soft) 62%);
+  border-radius:4px;padding:0 4px;
+}
+.hero p.lede{color:var(--muted);font-size:1.12rem;max-width:470px;margin-bottom:32px}
+.scroll-cue{
+  display:inline-flex;align-items:center;gap:11px;
+  font-weight:600;font-size:1rem;color:var(--blue);
+}
+.scroll-cue .arrow{
+  width:22px;height:22px;
+  animation:bob 1.4s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.scroll-cue:hover{color:var(--ink)}
+.hero-note{margin-top:20px;font-size:.88rem;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+.hero-note span::before{content:"✓ ";color:var(--wa);font-weight:700}
+
+/* ---------- hero: orbiting tools ---------- */
+.orbit{--r:168px;position:relative;width:420px;max-width:100%;aspect-ratio:1;margin:0 auto}
+.orbit::before{
+  content:"";position:absolute;inset:42px;border:2px dashed var(--line);border-radius:50%;
+}
+.hub{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:96px;height:96px;border-radius:30px;
+  background:conic-gradient(from 220deg,var(--sun),#FF7A45,var(--blue),var(--sun));
+  display:grid;place-items:center;
+  font-family:var(--display);font-weight:800;font-size:1.5rem;color:#fff;
+  box-shadow:0 16px 40px rgba(48,86,245,.3);
+  z-index:2;
+}
+.ring{position:absolute;inset:0;animation:spin 30s linear infinite}
+.sat{
+  position:absolute;top:50%;left:50%;
+  width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  display:grid;place-items:center;
+  font-weight:600;font-size:.76rem;color:var(--ink);
+  transform:rotate(var(--a)) translate(var(--r)) rotate(calc(var(--a) * -1));
+}
+.sat span{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  animation:spin-rev 30s linear infinite;
+  line-height:1.2;
+}
+.sat-ic{width:24px;height:24px;border-radius:6px;object-fit:contain}
+.sat-fb{
+  width:24px;height:24px;border-radius:8px;display:grid;place-items:center;
+  background:var(--blue-soft);color:var(--blue);
+  font-family:var(--display);font-weight:800;font-size:.85rem;font-style:normal;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes spin-rev{from{transform:rotate(0)}to{transform:rotate(-360deg)}}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--wa);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* card header (Kavya style) */
+.call-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+.call-id{display:flex;align-items:center;gap:11px}
+.call-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--sun));
+  display:grid;place-items:center;font-family:var(--display);font-weight:800;color:#fff;font-size:1.05rem;
+}
+.call-id strong{display:block;font-size:.95rem;line-height:1.25}
+.call-id span{font-size:.76rem;color:var(--muted);font-family:var(--mono)}
+.call-live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.74rem;color:var(--wa);font-weight:500}
+
+/* ---------- service demo cards (one per scroll, Kavya style) ---------- */
+.cards{display:flex;flex-direction:column;gap:64px;max-width:780px;margin:0 auto}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;
+  padding:24px;display:flex;flex-direction:column;gap:16px;
+  box-shadow:var(--shadow);
+}
+.card h3{font-size:1.3rem;letter-spacing:-.01em}
+.card > p{color:var(--muted);font-size:1rem;max-width:620px}
+
+/* shared demo stage */
+.demo{
+  display:flex;flex-direction:column;gap:11px;
+  min-height:290px;font-size:.95rem;overflow:hidden;
+  padding:4px 2px 0;
+}
+.d-step{opacity:0;transform:translateY(7px);transition:opacity .55s ease,transform .55s ease}
+.d-step.show{opacity:1;transform:none}
+
+/* chat-style demo rows */
+.d-bubble{max-width:80%;padding:10px 14px;border-radius:14px;line-height:1.55;background:var(--soft);border:1px solid var(--line)}
+.d-user{align-self:flex-end;background:var(--soft)}
+.d-bot{align-self:flex-start;background:var(--sun-soft);border-color:#F5DCAC}
+.d-wa-user{align-self:flex-end;background:var(--soft)}
+.d-wa-bot{align-self:flex-start;background:var(--wa-soft);border-color:#BCE8CC}
+.chip{
+  display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;
+  font-family:var(--mono);font-size:.66rem;
+  background:var(--card);
+}
+.chip.gold{color:#A36A00;border:1px solid #F0D9A8}
+.chip.green{color:#0E7A38;border:1px solid #BCE8CC}
+.chip.blue{color:var(--blue);border:1px solid #C6D2FF}
+
+/* pipeline / log demo rows */
+.d-row{
+  display:flex;align-items:flex-start;gap:11px;
+  padding:11px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line);
+}
+.d-row .ok{color:var(--wa);font-weight:700;line-height:1.4}
+.d-row .mono{font-family:var(--mono);font-size:.73rem;color:var(--muted)}
+.d-row strong{font-size:.84rem;font-weight:600}
+
+/* mini browser demo */
+.d-browser{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.d-browser .bar{display:flex;align-items:center;gap:5px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--soft)}
+.d-browser .bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.d-browser .bar .url{flex:1;font-family:var(--mono);font-size:.66rem;color:var(--muted);text-align:center}
+.d-browser .page{padding:13px;display:flex;flex-direction:column;gap:8px}
+.sk{height:9px;border-radius:4px;background:var(--soft)}
+.sk.w60{width:60%}.sk.w85{width:85%}.sk.w40{width:40%}
+.sk.gold{background:var(--sun);height:14px;width:50%}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+.step{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px 26px;position:relative;box-shadow:var(--shadow);
+}
+.step::before{
+  counter-increment:step;content:counter(step);
+  display:grid;place-items:center;
+  width:36px;height:36px;border-radius:12px;
+  background:var(--blue-soft);color:var(--blue);
+  font-family:var(--display);font-weight:800;font-size:1rem;
+  margin-bottom:14px;
+}
+.step h3{font-size:1.1rem;margin-bottom:8px}
+.step p{color:var(--muted);font-size:.95rem}
+
+/* ---------- about ---------- */
+.about{
+  background:var(--card);border:1px solid var(--line);border-radius:24px;
+  padding:52px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;
+}
+.about p{color:var(--muted);margin-bottom:14px;font-size:1.02rem}
+.team-points{display:flex;flex-direction:column;gap:14px}
+.tp{
+  display:flex;gap:13px;align-items:flex-start;
+  background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+}
+.tp .ic{font-size:1.25rem;line-height:1.3}
+.tp strong{display:block;font-size:.95rem}
+.tp span{font-size:.86rem;color:var(--muted)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-size:.93rem;background:var(--card)}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- chatbot ---------- */
+.chat-fab{
+  position:fixed;right:22px;bottom:22px;z-index:80;
+  width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--blue),var(--sun));
+  color:#fff;font-size:1.5rem;display:grid;place-items:center;
+  box-shadow:0 14px 34px rgba(18,26,56,.25);
+  transition:transform .15s ease;
+}
+.chat-fab:hover{transform:scale(1.07)}
+.chat-panel{
+  position:fixed;right:22px;bottom:94px;z-index:80;
+  width:min(370px,calc(100vw - 32px));height:480px;
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  display:none;flex-direction:column;overflow:hidden;
+  box-shadow:0 24px 60px rgba(18,26,56,.22);
+}
+.chat-panel.open{display:flex}
+.chat-head{
+  padding:15px 17px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;background:var(--soft);
+}
+.chat-head strong{font-family:var(--display);font-size:1rem}
+.chat-head span{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.chat-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:4px}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.cmsg{max-width:85%;padding:10px 13px;border-radius:13px;font-size:.9rem;line-height:1.5;white-space:pre-wrap}
+.cmsg.user{align-self:flex-end;background:var(--soft);border:1px solid var(--line)}
+.cmsg.bot{align-self:flex-start;background:var(--sun-soft);border:1px solid #F5DCAC}
+.cmsg.typing{color:var(--muted);font-family:var(--mono);font-size:.76rem}
+.chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-input input{
+  flex:1;background:var(--bg);border:1px solid var(--line);border-radius:12px;
+  padding:11px 14px;color:var(--ink);font-family:var(--body);font-size:.92rem;
+}
+.chat-input input::placeholder{color:var(--muted)}
+.chat-input button{
+  background:var(--blue);border:none;border-radius:12px;padding:0 18px;
+  font-weight:600;color:#fff;cursor:pointer;
+}
+
+/* ---------- responsive ---------- */
+
+/* large screens: a bit more air */
+@media (min-width:1400px){
+  .wrap{max-width:1180px}
+}
+
+/* tablets & small laptops */
+@media (max-width:1024px){
+  .wrap{padding:0 20px}
+  .hero{padding:64px 0 72px}
+  .hero-grid{gap:44px}
+  .orbit{--r:142px;width:360px}
+  .sat{width:68px;height:68px;margin:-34px 0 0 -34px;font-size:.7rem}
+  .hub{width:84px;height:84px;font-size:1.3rem}
+}
+
+/* tablets portrait */
+@media (max-width:900px){
+  .hero-grid,.about{grid-template-columns:1fr;gap:40px}
+  .steps{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .section{padding:64px 0}
+  .about{padding:32px 24px}
+  .cards{gap:44px}
+  .orbit{margin-top:8px}
+}
+
+/* phones */
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .nav{height:62px}
+  .logo{font-size:1.1rem}
+  .logo .spark{width:26px;height:26px}
+  .nav .btn{padding:10px 16px;font-size:.88rem}
+  .hero{padding:44px 0 56px}
+  .hero h1{font-size:clamp(1.85rem,8vw,2.4rem)}
+  .hero p.lede{font-size:1rem}
+  .hero-note{gap:12px;font-size:.82rem}
+  .section{padding:52px 0}
+  h2{font-size:clamp(1.5rem,6.4vw,1.9rem)}
+  .section-head{margin-bottom:36px}
+  .orbit{--r:122px;width:310px}
+  .sat{width:62px;height:62px;margin:-31px 0 0 -31px;font-size:.64rem}
+  .sat-ic{width:20px;height:20px}
+  .hub{width:74px;height:74px;border-radius:24px;font-size:1.2rem}
+  .orbit::before{inset:34px}
+  .cards{gap:36px}
+  .card{padding:18px;border-radius:18px}
+  .card h3{font-size:1.15rem}
+  .demo{min-height:0;font-size:.9rem}
+  .d-bubble{max-width:92%}
+  .call-id strong{font-size:.88rem}
+  .call-live{font-size:.66rem}
+  .step,.plan{padding:22px 20px}
+  .about h2{margin-top:.6rem}
+  .foot{flex-direction:column;align-items:flex-start;gap:16px}
+  .chat-panel{right:12px;left:12px;width:auto;bottom:86px;height:min(440px,72vh)}
+  .chat-fab{right:14px;bottom:14px;width:54px;height:54px}
+}
+
+/* small phones */
+@media (max-width:400px){
+  .wrap{padding:0 16px}
+  .orbit{--r:100px;width:260px}
+  .sat{width:54px;height:54px;margin:-27px 0 0 -27px;font-size:.58rem}
+  .sat-ic{width:17px;height:17px}
+  .hub{width:64px;height:64px;border-radius:20px;font-size:1.05rem}
+  .orbit::before{inset:28px}
+  .nav .btn{padding:9px 13px;font-size:.82rem}
+  .scroll-cue{font-size:.92rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Creative-AI home"><span class="spark" aria-hidden="true"></span>Creative-AI</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#services">What we build</a>
+      <a href="#how">How it works</a>
+      <a href="#about">About us</a>
+    </nav>
+    <a class="btn btn-wa" data-wa="Hi, I want to know more about Creative-AI services." href="#" target="_blank" rel="noopener">
+      <svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.2 1c.3.2.5.2.6.4 0 .1 0 .7-.2 1.3Z"/></svg>
+      Chat with us
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">AI helpers for your business</span>
+      <h1>Never miss a customer. <span class="hl">Day or night.</span></h1>
+      <p class="lede">We build AI helpers that answer your calls, reply to your customers, and finish boring office work — so you can focus on growing your business. Every system is built on a structured framework that removes errors, loops, and illogical steps, giving you clean, step-by-step flows and higher quality work.</p>
+      <a class="scroll-cue" href="#services">
+        <span>Scroll for our services</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="m6 14 6 6 6-6"/></svg>
+      </a>
+      <p class="hero-note"><span>Works 24 hours</span><span>Ready in days</span><span>Easy to use</span></p>
+    </div>
+
+    <!-- orbiting tools around AI hub -->
+    <div class="orbit" aria-label="Tools we build with, orbiting an AI core">
+      <div class="hub">AI</div>
+      <div class="ring">
+        <div class="sat" style="--a:0deg"><span><svg class="sat-ic" viewBox="0 0 24 24" fill="#D97757"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</span></div>
+        <div class="sat" style="--a:45deg"><span><img class="sat-ic" src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="" onerror="this.outerHTML='<b class=&quot;sat-fb&quot;>C</b>'">ChatGPT</span></div>
+        <div class="sat" style="--a:90deg"><span><svg class="sat-ic" viewBox="0 0 24 24" fill="#EA4B71"><path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></svg>n8n</span></div>
+        <div class="sat" style="--a:135deg"><span><svg class="sat-ic" viewBox="0 0 24 24" fill="#000000"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg>Cursor</span></div>
+        <div class="sat" style="--a:180deg"><span><img class="sat-ic" src="https://www.google.com/s2/favicons?domain=nousresearch.com&sz=64" alt="" onerror="this.outerHTML='<b class=&quot;sat-fb&quot;>H</b>'">Hermes</span></div>
+        <div class="sat" style="--a:225deg"><span><img class="sat-ic" src="https://www.google.com/s2/favicons?domain=vapi.ai&sz=64" alt="" onerror="this.outerHTML='<b class=&quot;sat-fb&quot;>V</b>'">Vapi</span></div>
+        <div class="sat" style="--a:270deg"><span><svg class="sat-ic" viewBox="0 0 24 24" fill="#76B900"><path d="M8.948 8.798v-1.43a6.7 6.7 0 0 1 .424-.018c3.922-.124 6.493 3.374 6.493 3.374s-2.774 3.851-5.75 3.851c-.398 0-.787-.062-1.158-.185v-4.346c1.528.185 1.837.857 2.747 2.385l2.04-1.714s-1.492-1.952-4-1.952a6.016 6.016 0 0 0-.796.035m0-4.735v2.138l.424-.027c5.45-.185 9.01 4.47 9.01 4.47s-4.08 4.964-8.33 4.964c-.37 0-.733-.035-1.095-.097v1.325c.3.035.61.062.91.062 3.957 0 6.82-2.023 9.593-4.408.459.371 2.34 1.263 2.73 1.652-2.633 2.208-8.772 3.984-12.253 3.984-.335 0-.653-.018-.971-.053v1.864H24V4.063zm0 10.326v1.131c-3.657-.654-4.673-4.46-4.673-4.46s1.758-1.944 4.673-2.262v1.237H8.94c-1.528-.186-2.73 1.245-2.73 1.245s.68 2.412 2.739 3.11M2.456 10.9s2.164-3.197 6.5-3.533V6.201C4.153 6.59 0 10.653 0 10.653s2.35 6.802 8.948 7.42v-1.237c-4.84-.6-6.492-5.936-6.492-5.936z"/></svg>NVIDIA</span></div>
+        <div class="sat" style="--a:315deg"><span><svg class="sat-ic" viewBox="0 0 24 24" fill="#FF4F00"><path d="M4.157 0A4.151 4.151 0 0 0 0 4.161v15.678A4.151 4.151 0 0 0 4.157 24h15.682A4.152 4.152 0 0 0 24 19.839V4.161A4.152 4.152 0 0 0 19.839 0H4.157Zm10.61 8.761h.03a.577.577 0 0 1 .23.038.585.585 0 0 1 .201.124.63.63 0 0 1 .162.431.612.612 0 0 1-.162.435.58.58 0 0 1-.201.128.58.58 0 0 1-.23.042.529.529 0 0 1-.235-.042.585.585 0 0 1-.332-.328.559.559 0 0 1-.038-.235.613.613 0 0 1 .17-.431.59.59 0 0 1 .405-.162Zm2.853 1.572c.03.004.061.004.095.004.325-.011.646.064.937.219.238.144.431.355.552.609.128.279.189.582.185.888v.193a2 2 0 0 1 0 .219h-2.498c.003.227.075.45.204.642a.78.78 0 0 0 .646.265.714.714 0 0 0 .484-.136.642.642 0 0 0 .23-.318l.915.257a1.398 1.398 0 0 1-.28.537c-.14.159-.321.284-.521.355a2.234 2.234 0 0 1-.836.136 1.923 1.923 0 0 1-1.001-.245 1.618 1.618 0 0 1-.665-.703 2.221 2.221 0 0 1-.227-1.036 1.95 1.95 0 0 1 .48-1.398 1.9 1.9 0 0 1 1.3-.488Zm-9.607.023c.162.004.325.026.48.079.207.065.4.174.563.314.26.302.393.692.366 1.088v2.276H8.53l-.109-.711h-.065c-.064.163-.155.31-.272.439a1.122 1.122 0 0 1-.374.264 1.023 1.023 0 0 1-.453.083 1.334 1.334 0 0 1-.866-.264.965.965 0 0 1-.329-.801.993.993 0 0 1 .076-.431 1.02 1.02 0 0 1 .242-.363 1.478 1.478 0 0 1 1.043-.303h.952v-.181a.696.696 0 0 0-.136-.454.553.553 0 0 0-.438-.154.695.695 0 0 0-.378.086.48.48 0 0 0-.193.254l-.99-.144a1.26 1.26 0 0 1 .257-.563c.14-.174.321-.302.533-.378.261-.091.54-.136.82-.129.053-.003.106-.007.163-.007Zm4.384.007c.174 0 .347.038.506.114.182.083.34.211.458.374.257.423.377.911.351 1.406a2.53 2.53 0 0 1-.355 1.448 1.148 1.148 0 0 1-1.009.517c-.204 0-.401-.045-.582-.136a1.052 1.052 0 0 1-.48-.457 1.298 1.298 0 0 1-.114-.234h-.045l.004 1.784h-1.059v-4.713h.904l.117.805h.057c.068-.208.177-.401.328-.56a1.129 1.129 0 0 1 .843-.344h.076v-.004Zm7.559.084h.903l.113.805h.053a1.37 1.37 0 0 1 .235-.484.813.813 0 0 1 .313-.242.82.82 0 0 1 .39-.076h.234v1.051h-.401a.662.662 0 0 0-.313.008.623.623 0 0 0-.272.155.663.663 0 0 0-.174.26.683.683 0 0 0-.027.314v1.875h-1.054v-3.666Zm-17.515.003h3.262v.896L3.73 13.104l.034.113h1.973l.042.9H2.4v-.9l1.931-1.754-.045-.117H2.441v-.896Zm11.815 0h1.055v3.659h-1.055V10.45Zm3.443.684.019.016a.69.69 0 0 0-.351.045.756.756 0 0 0-.287.204c-.11.155-.174.336-.189.522h1.545c-.034-.526-.257-.787-.74-.787h.003Zm-5.718.163c-.026 0-.057 0-.083.004a.78.78 0 0 0-.31.053.746.746 0 0 0-.257.189 1.016 1.016 0 0 0-.204.695v.064c-.015.257.057.507.204.711a.634.634 0 0 0 .253.196.638.638 0 0 0 .314.061.644.644 0 0 0 .578-.265c.14-.223.204-.48.189-.74a1.216 1.216 0 0 0-.181-.711.677.677 0 0 0-.503-.257Zm-4.509 1.266a.464.464 0 0 0-.268.102.373.373 0 0 0-.114.276c0 .053.008.106.027.155a.375.375 0 0 0 .087.132.576.576 0 0 0 .397.11v.004a.863.863 0 0 0 .563-.182.573.573 0 0 0 .211-.457v-.14h-.903Z"/></svg>Zapier</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES (live demos) ================= -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What we build</span>
+      <h2>Watch each helper do its job</h2>
+      <p>Every box below shows a real example, step by step. This is exactly what your customers would see.</p>
+    </div>
+    <div class="cards">
+
+      <!-- 1. Voice agent -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar" aria-hidden="true">📞</div>
+            <div>
+              <strong>AI Voice Agent</strong>
+              <span>answering your business line</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> LIVE CALL</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-bubble d-user">📞 "Hi, do you have any 2BHK flats for sale?"</div>
+          <div class="d-step d-bubble d-bot">"Yes, we do! We have 2BHK flats ready near the city center. What budget do you have in mind?"</div>
+          <div class="d-step d-bubble d-user">"Around 45 lakhs. Can I visit this Sunday?"</div>
+          <div class="d-step d-bubble d-bot">"Of course. Your site visit is booked for Sunday at 10:30 AM. The details are on their way to your WhatsApp. ✅"<span class="chip gold">call answered · site visit booked</span></div>
+        </div>
+        <h3>AI Voice Agent</h3>
+        <p>It picks up every call to your business, answers questions, and books appointments. It never sleeps and never takes a holiday.</p>
+      </div>
+
+      <!-- 2. RAG chatbot -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar" aria-hidden="true">💬</div>
+            <div>
+              <strong>Website Chat Box</strong>
+              <span>chatting on your website</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> ONLINE</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-bubble d-user">"What is included in the yearly service plan?"</div>
+          <div class="d-step d-bubble d-bot">"The yearly plan gives you 4 free services and priority support."<span class="chip gold">answer found in: your price list</span></div>
+          <div class="d-step d-bubble d-user">"How much does it cost?"</div>
+          <div class="d-step d-bubble d-bot">"It costs ₹4,999 per year."<span class="chip gold">answer found in: your documents</span></div>
+        </div>
+        <h3>Website Chat Box</h3>
+        <p>A chat box for your website that learns from your own files and price lists. It gives correct answers from your information — no guessing.</p>
+      </div>
+
+      <!-- 3. WhatsApp automation -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar" aria-hidden="true">🟢</div>
+            <div>
+              <strong>WhatsApp & Telegram Automation</strong>
+              <span>replying on your business number</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> AUTO REPLY ON</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-bubble d-wa-user">"Hi, can you send me your catalogue?"</div>
+          <div class="d-step d-bubble d-wa-bot">"Sure! 📄 Here is our latest catalogue and this month's offers."<span class="chip green">replied by itself, in 1 second</span></div>
+          <div class="d-step d-bubble d-wa-bot">"Reminder: your order will arrive tomorrow. 🚚"<span class="chip green">reminder sent to all customers</span></div>
+        </div>
+        <h3>WhatsApp & Telegram Automation</h3>
+        <p>It replies to customers instantly, sends catalogues and reminders, and shares updates with everyone — on the apps people already use every day.</p>
+      </div>
+
+      <!-- 4. Agentic AI -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar">O</div>
+            <div>
+              <strong>AI Office Worker</strong>
+              <span>doing the paperwork by itself</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> WORKING</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>A customer message arrives</strong><div class="mono">9:14 AM — new enquiry by email</div></div></div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>Customer details saved</strong><div class="mono">added to your records, by itself</div></div></div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>Price quote prepared</strong><div class="mono">made from your price sheet</div></div></div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>Follow-up planned for day 3</strong><div class="mono">nobody had to touch anything</div></div></div>
+        </div>
+        <h3>AI Office Worker (Agentic AI)</h3>
+        <p>This AI does the boring work for you: it reads messages, saves customer details, prepares quotes, and follows up — all by itself.</p>
+      </div>
+
+      <!-- 5. MCP integrations -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar">C</div>
+            <div>
+              <strong>AI + Your Software</strong>
+              <span>connected to billing & records</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> CONNECTED</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-row"><span class="ok">?</span><div><strong>You ask: "Did customer #4521 pay their bill?"</strong></div></div>
+          <div class="d-step d-row"><span class="ok">→</span><div><strong>AI checks your billing software</strong><div class="mono">safely, with permission</div></div></div>
+          <div class="d-step d-row"><span class="ok">→</span><div><strong>AI checks your customer records</strong><div class="mono">finds the right person</div></div></div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>"Yes — paid yesterday. Receipt already sent."</strong><span class="chip blue">checked 2 systems · gave 1 answer</span></div></div>
+        </div>
+        <h3>Connect AI to Your Software</h3>
+        <p>We safely connect AI to the software you already use — billing, customer records, databases — so it can check things and answer for you.</p>
+      </div>
+
+      <!-- 6. Web development -->
+      <div class="card reveal">
+        <div class="call-top">
+          <div class="call-id">
+            <div class="call-avatar">B</div>
+            <div>
+              <strong>Website Builder</strong>
+              <span>your new business website</span>
+            </div>
+          </div>
+          <div class="call-live"><span class="dot" aria-hidden="true"></span> BUILDING</div>
+        </div>
+        <div class="demo" data-demo>
+          <div class="d-step d-browser">
+            <div class="bar"><i></i><i></i><i></i><span class="url">yourbusiness.com</span></div>
+            <div class="page">
+              <div class="sk gold"></div>
+              <div class="sk w85"></div>
+              <div class="sk w60"></div>
+              <div class="sk w40"></div>
+            </div>
+          </div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>Ready in about 5 days</strong><div class="mono">opens fast · looks good on every phone</div></div></div>
+          <div class="d-step d-row"><span class="ok">✓</span><div><strong>Visitors can message you in one tap</strong><div class="mono">every page has a WhatsApp button</div></div></div>
+        </div>
+        <h3>Website Building</h3>
+        <p>Simple, fast websites for your business — with pages, prices, and a button so visitors can message you straight away.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>Three easy steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <h3>Message us</h3>
+        <p>Tell us what takes up your time — missed calls, the same questions again and again, or slow paperwork. 15 minutes is enough.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Try a free demo</h3>
+        <p>In a few days, we show you a working demo made with your real information. Call it, chat with it, and judge it yourself.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Go live</h3>
+        <p>Happy with it? We switch it on for your business — and we stay with you for updates and help after launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about reveal">
+      <div>
+        <span class="eyebrow">About us</span>
+        <h2>The team behind Creative-AI</h2>
+        <p>Creative-AI is led by <strong>Tharun Reddy</strong>, working with a team of engineers who build AI systems for businesses, schools, and institutions.</p>
+        <p>We have built phone helpers, website chat systems, WhatsApp automation, and complete websites — and we support every project after launch. When you message us, you talk to the people who actually build your system.</p>
+      </div>
+      <div class="team-points">
+        <div class="tp"><span class="ic">🛠️</span><div><strong>We build it</strong><span>Your system is made by our own team, start to finish.</span></div></div>
+        <div class="tp"><span class="ic">🤝</span><div><strong>We support it</strong><span>After launch, we stay available for updates and help.</span></div></div>
+        <div class="tp"><span class="ic">💬</span><div><strong>We talk simply</strong><span>No confusing technical words — we explain everything clearly.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span><strong style="color:var(--ink)">Creative-AI</strong> · AI helpers for your business</span>
+    <a class="btn btn-wa" data-wa="Hi, I found you through the Creative-AI website." href="#" target="_blank" rel="noopener">
+      <svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.2 1c.3.2.5.2.6.4 0 .1 0 .7-.2 1.3Z"/></svg>
+      Message us on WhatsApp
+    </a>
+  </div>
+</footer>
+
+<!-- ================= CHATBOT ================= -->
+<button class="chat-fab" id="chatFab" aria-label="Open AI assistant">✦</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Creative-AI assistant">
+  <div class="chat-head">
+    <div>
+      <strong>Creative-AI Assistant</strong>
+      <span>ask anything about our services</span>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="cmsg bot">Hi! 👋 Ask me anything — phone helpers, website chat, WhatsApp automation, or prices.</div>
+  </div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" placeholder="Type your question…" aria-label="Your message" />
+    <button id="chatSend">Send</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG — change these two lines and you're done
+   ========================================================= */
+const WHATSAPP_NUMBER = "91XXXXXXXXXX"; // <-- your number, country code, no +
+const ANTHROPIC_API_KEY = "";           // <-- leave "" in Claude preview; for live deploy see README
+
+/* ---------- WhatsApp deep links ---------- */
+document.querySelectorAll("[data-wa]").forEach(a => {
+  a.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(a.dataset.wa);
+});
+
+/* ---------- timing ---------- */
+const FIRST_MS = 500;   // first message appears after 0.5 seconds
+const NEXT_MS  = 1000;  // each following message 1 second later
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- service demos: start when visible, play once, chats stay ---------- */
+document.querySelectorAll("[data-demo]").forEach(demo => {
+  const steps = demo.querySelectorAll(".d-step");
+  if (reduced){
+    steps.forEach(s => s.classList.add("show"));
+    return;
+  }
+  let started = false;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting && !started){
+      started = true;
+      steps.forEach((s, i) => setTimeout(() => s.classList.add("show"), FIRST_MS + NEXT_MS * i));
+      io.unobserve(demo);
+    }
+  }), {threshold:.35});
+  io.observe(demo);
+});
+
+/* ---------- scroll reveal ---------- */
+if (reduced) {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+} else {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+  }), {threshold:.12});
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+}
+
+/* ---------- chatbot ---------- */
+const SYSTEM_PROMPT = `You are the friendly assistant on the Creative-AI website. Creative-AI is an AI automation studio led by Tharun Reddy with a team of engineers, building AI systems for businesses, schools, and institutions.
+
+Services: (1) AI voice agents that answer calls 24/7, answer questions, and book appointments; (2) website chat boxes trained on the customer's own documents that answer from their real information; (3) WhatsApp & Telegram automation (instant replies, reminders, catalogues, bulk updates); (4) AI office workers (agentic AI) that finish repetitive tasks end to end; (5) safely connecting AI to existing software like CRM, billing, and databases; (6) website building (simple fast sites, booking pages, calculators).
+
+Pricing: prices depend on the project. If someone asks about cost, do not quote numbers — invite them to message on WhatsApp for a quick, friendly quote.
+
+Rules: use very simple, plain English that anyone can understand — no technical jargon. Reply in the user's language if they write in another language. Keep answers short (2-4 sentences). Be honest about what is possible. Always end by inviting them to continue on WhatsApp for a free demo. Never invent services or promise prices.`;
+
+const chatFab = document.getElementById("chatFab");
+const chatPanel = document.getElementById("chatPanel");
+const chatMsgs = document.getElementById("chatMsgs");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+let history = [];
+
+chatFab.addEventListener("click", () => { chatPanel.classList.toggle("open"); chatInput.focus(); });
+document.getElementById("chatClose").addEventListener("click", () => chatPanel.classList.remove("open"));
+
+function addMsg(text, cls){
+  const d = document.createElement("div");
+  d.className = "cmsg " + cls;
+  d.textContent = text;
+  chatMsgs.appendChild(d);
+  chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  return d;
+}
+
+async function send(){
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+  addMsg(text, "user");
+  history.push({role:"user", content:text});
+  const typing = addMsg("thinking…", "bot typing");
+  try {
+    const headers = {"Content-Type":"application/json"};
+    if (ANTHROPIC_API_KEY){
+      headers["x-api-key"] = ANTHROPIC_API_KEY;
+      headers["anthropic-version"] = "2023-06-01";
+      headers["anthropic-dangerous-direct-browser-access"] = "true";
+    }
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers,
+      body: JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:1000,
+        system: SYSTEM_PROMPT,
+        messages: history
+      })
+    });
+    const data = await res.json();
+    const reply = (data.content || []).map(c => c.type === "text" ? c.text : "").join("").trim()
+      || "Sorry — I couldn't get a reply. Please message us on WhatsApp instead.";
+    typing.remove();
+    addMsg(reply, "bot");
+    history.push({role:"assistant", content:reply});
+    if (history.length > 20) history = history.slice(-20);
+  } catch (err){
+    typing.remove();
+    addMsg("Connection issue — tap the green WhatsApp button and message us directly.", "bot");
+  }
+}
+chatSend.addEventListener("click", send);
+chatInput.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+</script>
+</body>
+</html>
