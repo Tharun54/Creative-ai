@@ -626,10 +626,16 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-s
 <footer>
   <div class="wrap foot">
     <span><strong style="color:var(--ink)">Creative-AI</strong> · AI helpers for your business</span>
-    <a class="btn btn-wa" data-wa="Hi, I found you through the Creative-AI website." href="#" target="_blank" rel="noopener">
-      <svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.2 1c.3.2.5.2.6.4 0 .1 0 .7-.2 1.3Z"/></svg>
-      Message us on WhatsApp
-    </a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-wa" data-wa="Hi, I found you through the Creative-AI website." href="#" target="_blank" rel="noopener">
+        <svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.2 1c.3.2.5.2.6.4 0 .1 0 .7-.2 1.3Z"/></svg>
+        Message us on WhatsApp
+      </a>
+      <a class="btn btn-ghost" href="mailto:tharunyerva24@gmail.com?subject=Enquiry%20from%20Creative-AI%20website">
+        <svg class="wa-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg>
+        Email us
+      </a>
+    </div>
   </div>
 </footer>
 
@@ -656,8 +662,15 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-s
 /* =========================================================
    CONFIG — change these two lines and you're done
    ========================================================= */
-const WHATSAPP_NUMBER = "91XXXXXXXXXX"; // <-- your number, country code, no +
+const WHATSAPP_NUMBER = "919703328954"; // country code + number, no +
 const ANTHROPIC_API_KEY = "";           // <-- leave "" in Claude preview; for live deploy see README
+
+/* ---------- always open at the top (no auto-scroll from #links) ---------- */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+window.addEventListener("load", () => {
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  window.scrollTo(0, 0);
+});
 
 /* ---------- WhatsApp deep links ---------- */
 document.querySelectorAll("[data-wa]").forEach(a => {
