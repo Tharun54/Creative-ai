@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Creative-AI — AI helpers for your business</title>
-<meta name="description" content="Creative-AI builds AI helpers that answer your calls, reply to customers, and finish boring office work — day and night." />
+<meta name="description" conthent="Creative-AI builds AI helpers that answer your calls, reply to customers, and finish boring office work — day and night." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Albert+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -666,9 +666,9 @@ const WHATSAPP_NUMBER = "919703328954"; // country code + number, no +
 const ANTHROPIC_API_KEY = "";           // <-- leave "" in Claude preview; for live deploy see README
 
 /* ---------- always open at the top (no auto-scroll from #links) ---------- */
-if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
 window.addEventListener("load", () => {
-  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  if (location.hash) window.history.replaceState(null, "", location.pathname + location.search);
   window.scrollTo(0, 0);
 });
 
